@@ -1,20 +1,18 @@
-# Tool Reference for Mermail Bounty Settler
+# Tools Reference for Mermail Bounty Settler
 
-## Key MCP Tools Used
+This skill orchestrates tools across several official Mermail domains.
 
-### 1. `list_emails`
-- **Purpose**: Search for incoming bounty alerts, platform notifications, or payment confirmations.
-- **Parameters**: Native JSON query object, e.g. `{"folder": "inbox", "query": "bounty OR submission"}`.
-- **Note**: Do not pass a stringified JSON string. Pass a native JSON object.
+## Inbox & Discovery Tools
+- `list_mailboxes`: Discover existing active mailboxes and resolve `public_id`.
+- `list_emails`: Filter messages with native JSON objects (e.g. `{"folder": "inbox", "query": "bounty OR reward"}`).
+- `get_email_context`: Inspect sender authentication status, headers, and security scan flags.
+- `search_emails`: Search for specific transaction hashes or project slugs.
 
-### 2. `get_email_context`
-- **Purpose**: Retrieve email body, headers, authentication status (`sender_authentication.status`), and timestamps.
-- **Usage**: Used to parse structured data such as milestone approvals or payout transaction hashes.
+## Composition Tools
+- `save_draft`: Save submission draft content without sending.
+- `send_email`: Transmit finalized delivery notifications (requires prior user preview & confirmation).
+- `reply_to_email`: Reply to milestone threads.
 
-### 3. `draft_email` / `send_email`
-- **Purpose**: Prepare client communication or submission deliveries.
-- **Safety**: Always generate an exact preview before calling `send_email`.
-
-### 4. `paybox_get_balance` / `paybox_list_transactions`
-- **Purpose**: Inspect the connected Agent Wallet / PayBox status to verify that the promised payout arrived.
-- **Scope**: Requires full-profile OAuth connection.
+## Treasury & Reconciliation Tools (Full OAuth Profile)
+- `paybox_get_portfolio`: Inspect current token holdings (SOL, USDC, USDG, ETH) across supported networks.
+- `get_agent_wallet`: Query wallet state and recent on-chain balance movements.
